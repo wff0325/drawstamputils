@@ -1,11 +1,12 @@
-/* 保留你现有的 :root, a, body (初始部分) */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,7 +30,7 @@ body {
 }
 
 h1 {
-  font-size: 2.2em; /* 为移动端优先调整，后续会增大 */
+  font-size: 3.2em;
   line-height: 1.1;
 }
 
@@ -53,19 +54,18 @@ button:focus-visible {
 }
 
 .card {
-  padding: 1.5em; /* 为移动端略微减小 */
+  padding: 2em;
 }
 
 #app {
   background-color: #d8ae8c;
   flex: 1;
-  padding: 1rem; /* 为移动端减小内边距 */
+  padding: 4rem; /* 桌面端原始padding */
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%; /* 确保 #app 占据全部宽度 */
-  box-sizing: border-box; /* 包含 padding 和 border 在宽度内 */
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: light) {
@@ -81,248 +81,723 @@ button:focus-visible {
   }
 }
 
-/* --- 响应式布局从这里开始 --- */
-
-/* 容器样式 (移动端优先) */
+/* 容器样式 */
 .container {
   border-radius: 12px;
   background-color: #f8f9fa;
-  flex: 1; /* 占据 #app 中的可用空间 */
-  width: 100%; /* 移动端全宽 */
-  max-width: 1400px; /* 可选: 超大屏幕的最大宽度 */
+  flex: 1;
+  width: 80%; /* 桌面端原始宽度 */
   display: flex;
-  flex-direction: column; /* 移动端垂直堆叠元素 */
-  align-items: center; /* 如果子元素比容器窄，则居中它们 */
-  overflow: hidden; /* 如果需要，保留此项 */
-  padding: 10px; /* 为移动端添加一些内边距 */
+  align-items: center;
+  flex-direction: row; /* 桌面端原始flex-direction */
+  justify-content: center;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
-/* 编辑器控制面板样式 (移动端优先) */
+/* 编辑器控制面板样式 */
 .editor-controls {
-  /* height: 80vh; 移除移动端的固定高度，让内容决定，或使用 max-height */
-  max-height: 70vh; /* 示例: 允许滚动但不要固定占据整个屏幕 */
-  width: 100%; /* 移动端全宽 */
-  max-width: 450px; /* 这样在稍大的“移动”屏幕上不会过宽 */
-  padding: 15px; /* 减小内边距 */
+  height: 80vh; /* 桌面端原始高度 */
+  width: 400px; /* 桌面端原始宽度 */
+  padding: 25px;
   background-color: #f5f5f5;
-  overflow-y: auto; /* 改为 auto，需要时滚动 */
+  overflow-y: scroll;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 15px;
   scrollbar-width: thin;
   scrollbar-color: #888 #f5f5f5;
-  margin-bottom: 1rem; /* 堆叠项目之间的间距 */
-  border-radius: 8px; /* 堆叠时增加圆角以保持一致性 */
-}
-/* 保留滚动条样式 */
-.editor-controls::-webkit-scrollbar { width: 8px; }
-.editor-controls::-webkit-scrollbar-track { background: #f5f5f5; }
-.editor-controls::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-.editor-controls::-webkit-scrollbar-thumb:hover { background: #666; }
-
-
-/* Canvas 容器样式 (移动端优先) */
-.canvas-container {
-  background-color: #f8f9fa; /* 或透明，如果 .container 已有背景 */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px; /* 减小内边距 */
-  overflow: hidden;
-  width: 100%; /* 占据可用全宽 */
-  margin-bottom: 1rem; /* 堆叠项目之间的间距 */
-  border-radius: 8px; /* 增加圆角 */
 }
 
-canvas {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  border-radius: 8px;
+.editor-controls::-webkit-scrollbar {
+  width: 8px;
+}
+
+.editor-controls::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+.editor-controls::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.editor-controls::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* 控制组样式 */
+.control-group {
   background-color: white;
-  max-width: 100%; /* 关键: 实现响应式 */
-  height: auto;    /* 关键: 保持宽高比 */
-}
-
-/* 模板面板样式 (移动端优先) */
-.template-panel {
-  width: 100%; /* 移动端全宽 */
-  max-width: 450px; /* 类似于 .editor-controls */
-  background: #fff;
-  border-left: none; /* 堆叠时不需要左边框 */
-  display: flex;
-  flex-direction: column;
-  /* height: 80vh; 移除固定高度 */
-  max-height: 70vh; /* 示例 max-height */
-  overflow-y: auto; /* 需要时滚动 */
   border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-
-/* ---- 平板样式 (例如: 屏幕 >= 768px) ---- */
-@media (min-width: 768px) {
-  #app {
-    padding: 2rem; /* 恢复或调整内边距 */
-  }
-
-  h1 {
-    font-size: 2.8em;
-  }
-
-  .card {
-    padding: 2em;
-  }
-
-  .container {
-    flex-direction: row; /* 并排布局 */
-    flex-wrap: wrap; /* 如果空间不足，允许换行 */
-    justify-content: center; /* 如果项目未填满行，则居中 */
-    padding: 20px; /* 恢复内边距 */
-    gap: 20px; /* flex 项目之间的间距 */
-  }
-
-  .editor-controls {
-    width: 280px; /* 侧边栏的固定宽度 */
-    height: 80vh; /* 恢复滚动面板的固定高度 */
-    margin-bottom: 0; /* 并排时无外边距 */
-    max-width: none; /* 移除移动端的 max-width */
-  }
-
-  .canvas-container {
-    flex: 1; /* 允许画布区域增长并占据可用空间 */
-    padding: 20px; /* 恢复内边距 */
-    margin-bottom: 0;
-    /* min-width: 300px; /* 可选: 确保画布不会被过度挤压 */
-  }
-
-  .template-panel {
-    width: 250px; /* 侧边栏的固定宽度 */
-    height: 80vh; /* 恢复固定高度 */
-    border-left: 1px solid #eee; /* 恢复边框 */
-    max-width: none; /* 移除移动端的 max-width */
-  }
-
-  /* 如果需要，为稍宽的屏幕调整按钮组 */
-  .button-group {
-    /* grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* 示例调整 */
-  }
+.group-header {
+  cursor: pointer;
 }
 
-/* ---- 桌面样式 (例如: 屏幕 >= 1024px 或 1200px) ---- */
-@media (min-width: 1024px) {
-  #app {
-    padding: 3rem; /* 桌面更大的内边距 */
-  }
-  
-  h1 {
-    font-size: 3.2em; /* 恢复原始大小 */
-  }
-
-  .container {
-    flex-wrap: nowrap; /* 在大屏幕上防止三列布局换行 */
-    justify-content: space-between; /* 或 center，取决于期望的对齐方式 */
-    /* width: 90%; /* 如果喜欢，也可以使用 100% 宽度配合 max-width */
-  }
-
-  .editor-controls {
-    width: 350px; /* 如果需要，桌面端可以稍宽一些，或使用原始的 400px */
-    /* 原始是 400px, 按需调整 */
-  }
-
-  /* .canvas-container 可以保留来自平板样式的 flex: 1 */
-
-  .template-panel {
-    width: 300px; /* 恢复原始宽度 */
-  }
+.control-group:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* --- 针对小屏幕特定组件的调整 --- */
-
-/* 按钮组在小屏幕上可能需要调整 */
+/* 按钮组样式 */
 .button-group {
-  position: sticky;
-  top: 0; /* 如果其上方有其他 sticky 元素，需要小心处理 */
+  position: sticky; /* 桌面端原始定位 */
+  top: 0;
   z-index: 1000;
   background-color: white;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   display: grid;
-  /* 按钮组的移动端优先: 更灵活 */
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  grid-template-columns: repeat(3, 1fr); /* 桌面端原始列数 */
   gap: 8px;
 }
-@media (min-width: 400px) { /* 当有足够空间容纳3列时 */
-  .button-group {
-    grid-template-columns: repeat(3, 1fr);
-  }
+
+.button-group button {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
-
-/* 移动端标签导航 */
-.tab-navigation {
-  /* position: sticky; top: 60px; /* 这个需要小心管理与其他 sticky 元素的层叠 */
-  /* 如果移动端标签过多，考虑水平滚动 */
-  overflow-x: auto;
-  white-space: nowrap; /* 防止标签按钮自身换行 */
-}
-.tab-button {
-  flex: 0 0 auto; /* 防止 flex-grow, 允许自然宽度或最小宽度 */
-  min-width: 80px; /* 示例: 标签的最小宽度 */
+.button-group button:hover {
+  background-color: #45a049;
+  transform: translateY(-1px);
 }
 
-
-/* 法律免责声明需要为移动端审阅 */
-.legal-disclaimer {
-  padding: 10px 15px; /* 调整内边距 */
-}
-.warning-text h3 {
-  font-size: 16px; /* 调整字体大小 */
-}
-.warning-text p {
-  font-size: 13px; /* 调整字体大小 */
-}
-.warning-icon {
-  font-size: 20px; /* 调整图标大小 */
+/* 标题和内容样式 */
+.control-group h3 {
+  margin: 0 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #4caf50;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-/* 法律提示弹窗 */
-.legal-dialog {
-  padding: 20px;
-  /* width: 90% 对移动端友好 */
-  /* max-width: 500px 很好 */
+/* 列表样式 */
+.inner-circle-list,
+.company-list,
+.stamp-type-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.legal-dialog h3 {
-  font-size: 18px;
+
+.inner-circle-item,
+.company-item,
+.stamp-type-item {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px;
+  transition: all 0.3s ease;
 }
 
+.inner-circle-item:hover,
+.company-item:hover,
+.stamp-type-item:hover {
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 
-/* 保留你其余的 CSS (control-group, input 样式等) */
-/* 它们主要关于外观，而非布局，所以应该问题不大。 */
-/* 如果它们在移动端看起来过于拥挤，请检查其中的字体大小和内边距。 */
-
-/* 示例: 移动端标签的字体大小调整 */
+/* 表单控件样式 */
 .editor-controls label {
-  font-size: 13px; /* 如果需要，移动端可以略小 */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
 }
+
 .editor-controls input[type='text'],
 .editor-controls input[type='number'],
 .editor-controls select {
-  font-size: 13px; /* 如果需要，移动端可以略小 */
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
 }
 
-/* 你现有的以下样式：
-.control-group, .group-header, .control-group:hover,
-.control-group h3, .inner-circle-list, .company-list, .stamp-type-list,
-.inner-circle-item, .company-item, .stamp-type-item, 及其 hover 效果,
-.editor-controls label, input, select, range, checkbox 样式,
-.add-button, .delete-button, 各类 header, .template-header, .add-template,
-.template-list, .template-item, .template-preview, .template-info, .template-actions,
-.delete-template, .tab-navigation (见上方), .tab-button,
-.template-category, .legal-disclaimer (见上方), .disclaimer-content,
-.warning-icon, .warning-text, .legal-dialog-overlay, .legal-dialog (见上方),
-.legal-content, .dialog-buttons, .cancel-button, .confirm-button,
-.image-list, .image-item, .image-header, .image-preview
-...大部分应保持原样，除非特定元素导致溢出或过大。
-*/
+.editor-controls input[type='text']:focus,
+.editor-controls input[type='number']:focus,
+.editor-controls select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* 滑块样式 */
+.editor-controls input[type='range'] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #ddd;
+  border-radius: 3px;
+  outline: none;
+}
+
+.editor-controls input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #4caf50;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.editor-controls input[type='range']::-webkit-slider-thumb:hover {
+  background: #45a049;
+}
+
+/* 复选框样式 */
+.checkbox-label {
+  flex-direction: row !important;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-label input[type='checkbox'] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+/* 按钮样式 */
+.add-button,
+.delete-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-button {
+  background-color: #4caf50;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.add-button:hover {
+  background-color: #45a049;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* 标题栏样式 */
+.inner-circle-header,
+.company-header,
+.stamp-type-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Canvas 容器样式 */
+.canvas-container {
+  background-color: #f8f9fa; /* 这个背景色可能在桌面端不需要，因为.container已有背景 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* 桌面端原始padding */
+  overflow: hidden;
+  flex: 1; /* 让 canvas 容器在桌面端占据可用空间 */
+}
+
+canvas {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background-color: white;
+  /* 新增，确保 canvas 响应式 */
+  max-width: 100%;
+  height: auto; /* 如果需要保持宽高比 */
+}
+
+/* 模板面板样式 */
+.template-panel {
+  width: 300px; /* 桌面端原始宽度 */
+  background: #fff;
+  border-left: 1px solid #eee; /* 桌面端原始边框 */
+  display: flex;
+  flex-direction: column;
+  height: 80vh; /* 桌面端原始高度 */
+}
+
+.template-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.template-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.add-template {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.template-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.template-item {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.template-item:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.template-item.active {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76,175,80,0.2);
+}
+
+.template-preview {
+  height: 150px;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  background: #f5f5f5;
+}
+
+.template-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.template-info {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.template-name {
+  font-size: 14px;
+  color: #333;
+}
+
+.template-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.delete-template {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.delete-template:hover {
+  background: #ff7875;
+}
+
+/* Tab 样式 */
+.tab-navigation {
+  display: flex;
+  gap: 2px;
+  background: #f0f0f0;
+  padding: 2px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  position: sticky; /* 桌面端原始定位 */
+  top: 60px; /* 这个值可能需要根据 .button-group 的高度调整 */
+  z-index: 1000; /* 如果 .button-group z-index 也是1000，可能需要调整 */
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #fff;
+  color: #666;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  background: #e8f5e9;
+  color: #4caf50;
+}
+
+.tab-button.active {
+  background: #4caf50;
+  color: white;
+}
+
+/* 模板分类样式 */
+.template-category {
+  margin-bottom: 20px;
+}
+
+.template-category h4 {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-size: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* 修改法律免责说明样式 */
+.legal-disclaimer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  background-color: rgba(255, 241, 240, 0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 12px 20px;
+  transition: all 0.3s ease;
+}
+
+.disclaimer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.warning-icon {
+  font-size: 24px;
+  color: #ff4d4f;
+  flex-shrink: 0;
+}
+
+.warning-text {
+  flex: 1;
+}
+
+.warning-text h3 {
+  color: #ff4d4f;
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.warning-text p {
+  color: #cf1322;
+  margin: 4px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.warning-text strong {
+  font-size: 16px;
+}
+
+/* 添加法律提示弹窗样式 */
+.legal-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2100;
+}
+
+.legal-dialog {
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.legal-dialog h3 {
+  color: #ff4d4f;
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legal-content {
+  margin-bottom: 20px;
+}
+
+.legal-content p {
+  color: #cf1322;
+  margin-bottom: 12px;
+}
+
+.legal-content ol {
+  color: #666;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.legal-content li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.cancel-button,
+.confirm-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.cancel-button {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.confirm-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #e8e8e8;
+}
+
+.confirm-button:hover {
+  background-color: #45a049;
+}
+
+.image-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.image-item {
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 6px;
+  background: #f8f9fa;
+}
+
+.image-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.image-preview {
+  width: 100px;
+  height: 100px;
+  margin: 10px auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+/* --- 以下是新增的响应式调整 (尽量不改变原有桌面样式) --- */
+
+/* 针对平板和更小设备 (例如屏幕宽度小于 992px 时) */
+@media (max-width: 991.98px) {
+  #app {
+    padding: 1.5rem; /* 稍微减少 #app 的内边距 */
+  }
+
+  .container {
+    width: 90%; /* 在平板上让 container 稍微宽一些 */
+    flex-direction: column; /* 主要内容区域垂直堆叠 */
+    align-items: center; /* 当子元素宽度不是100%时，使其居中 */
+    padding: 15px; /* 调整容器内边距 */
+    gap: 20px; /* 堆叠元素之间的间距 */
+  }
+
+  .editor-controls,
+  .canvas-container,
+  .template-panel {
+    width: 100%; /* 让它们占据父容器（.container）的全部宽度 */
+    max-width: 600px; /* 在平板上限制一个最大宽度，避免过宽，如果 .container 本身已够窄，此条可能不明显 */
+    margin-bottom: 0; /* 由于 gap 在 .container 上，这里不需要 margin-bottom */
+    height: auto; /* 覆盖固定的 vh 高度，让内容决定高度 */
+    max-height: 75vh; /* 限制最大高度，并允许内部滚动 */
+    overflow-y: auto; /* 确保内容过多时可以滚动 */
+    /* 移除桌面端的特定宽度/高度 */
+    flex: none; /* 取消桌面端 canvas-container 的 flex:1 */
+  }
+
+  .editor-controls {
+    /* width: 400px; 已被 width: 100% 覆盖 */
+    /* height: 80vh; 已被 height: auto 覆盖 */
+  }
+
+  .canvas-container {
+    order: -1; /* 可选: 如果希望画布在小屏幕显示在最上方 */
+    padding: 10px; /* 调整画布容器内边距 */
+    background-color: white; /* 给画布区域一个白色背景，与其它面板一致 */
+  }
+
+  .template-panel {
+    /* width: 300px; 已被 width: 100% 覆盖 */
+    /* height: 80vh; 已被 height: auto 覆盖 */
+    border-left: none; /* 堆叠时移除左边框 */
+  }
+
+  .button-group {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    position: static; /* 在小屏幕上取消粘性定位，避免布局问题 */
+    top: auto;
+    z-index: auto;
+  }
+
+  .tab-navigation {
+    position: static; /* 同上，考虑取消粘性定位 */
+    top: auto;
+    z-index: auto;
+    overflow-x: auto; /* 如果tab过多，允许水平滚动 */
+    white-space: nowrap;
+  }
+  .tab-button {
+     flex: 0 0 auto; /* 让tab按钮根据内容自适应宽度 */
+     min-width: 80px; /* 给tab一个最小宽度 */
+  }
+}
+
+/* 针对手机等更小屏幕 (例如屏幕宽度小于 576px 时) */
+@media (max-width: 575.98px) {
+  #app {
+    padding: 1rem; /*进一步减少 #app 的内边距 */
+  }
+
+  .container {
+    width: 100%; /* 在手机上，.container 占满屏幕宽度 */
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .editor-controls,
+  .canvas-container,
+  .template-panel {
+    /* width: 100%; 继承自平板 */
+    max-width: none; /* 取消平板上设置的 max-width，因为 .container 已经很窄 */
+  }
+
+  .editor-controls {
+    padding: 15px; /* 调整控制面板内边距 */
+  }
+
+  h1 {
+    font-size: 2em; /* 减小标题字号 */
+  }
+
+  .control-group {
+    padding: 10px; /* 减小控制组内边距 */
+  }
+  .control-group h3 {
+    font-size: 15px; /* 减小控制组标题字号 */
+    margin-bottom: 10px;
+  }
+
+  .editor-controls label,
+  .editor-controls input[type='text'],
+  .editor-controls input[type='number'],
+  .editor-controls select,
+  .button-group button,
+  .add-button,
+  .delete-button {
+    font-size: 13px; /* 统一调整控件字体大小 */
+  }
+  
+  .button-group {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 5px;
+    padding: 8px;
+  }
+  .button-group button {
+    padding: 6px 10px;
+  }
+
+  .legal-disclaimer {
+    padding: 8px 10px;
+    font-size: 12px; /* 整体减小免责声明文字大小 */
+  }
+  .warning-text h3 {
+    font-size: 15px;
+  }
+  .warning-text p {
+    font-size: 12px;
+  }
+  .warning-icon {
+    font-size: 20px;
+  }
+
+  .legal-dialog {
+    padding: 15px;
+    width: 90%; /* 保持弹窗宽度为视口的90% */
+  }
+  .legal-dialog h3 {
+    font-size: 17px;
+  }
+  .legal-content p, .legal-content li {
+      font-size: 13px; /* 调整弹窗内容字体 */
+  }
+}
