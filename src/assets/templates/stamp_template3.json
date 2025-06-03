@@ -1,0 +1,60 @@
+{
+  "name": "印章3-横椭圆",
+  "config": {
+    "width": 30,  // 横向向椭圆的宽度 (mm) - 比高度小
+    "height": 40, // 横向椭圆的高度 (mm)
+    "primaryColor": "red", // 示例颜色：红色
+    "outBorder": {
+      "drawInnerCircle": true,
+      "innerCircleLineWidth": 1.2 // 边框线宽 (mm)
+    },
+    "companyList": [
+      {
+        "companyName": "竖椭圆印章测试有限公司",
+        "fontFamily": "KaiTi", // 示例字体：楷体
+        "fontHeight": 3.2,
+        "letterSpacing": 1,
+        "startAngle": 180,
+        "textRadiusOffset": -0.5, // 文字稍微向内一点
+        "rotateDirection": "clockwise",
+        "fontWeight": "bold", // 示例：加粗
+        "compression": 1
+      }
+    ],
+    "stampTypeList": [
+      {
+        "stampType": "财务专用", // 中间文字示例
+        "fontFamily": "FangSong", // 示例字体：仿宋
+        "fontHeight": 3.8,
+        "letterSpacing": 0.5,
+        "positionY": 1, // Y轴向下偏移一点
+        "fontWeight": "normal",
+        "lineSpacing": 1.3,
+        "compression": 0.95 // 文字稍微压扁一点
+      }
+    ],
+    "drawStar": { // 这个模板里我们不加五角星
+      "drawStar": false
+    },
+    "stampCode": { // 示例：添加编码
+      "drawCode": true,
+      "code": "1234567890",
+      "fontFamily": "Arial",
+      "fontHeight": 2.5,
+      "letterSpacing": 2,
+      "startAngle": -80, // 从底部开始
+      "textRadiusOffset": 3, // 距离边框向外一点
+      "rotateDirection": "clockwise",
+      "fontWeight": "normal",
+      "compression": 1
+    },
+    "ruler": {
+      "showRuler": false,
+      "showFullRuler": false,
+      "showSideRuler": false,
+      "showCrossLine": false,
+      "showCurrentPositionText": false,
+      "showDashLine": false
+    }
+  }
+}
